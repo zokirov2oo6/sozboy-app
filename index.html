@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SozBoy — Inglizcha so'zlarni o'yin orqali yodlang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #FFFBF0;
+    --cream-deep: #FFF3DE;
+    --ink: #2D2A6E;
+    --ink-soft: #4A4790;
+    --coral: #FF6B4A;
+    --coral-deep: #E8492A;
+    --sun: #FFD23F;
+    --teal: #4ECDC4;
+    --teal-deep: #2FA39A;
+    --white: #FFFFFF;
+    --shadow: rgba(45,42,110,0.16);
+    --display: 'Baloo 2', sans-serif;
+    --body: 'Manrope', sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family: var(--body);
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  a{ text-decoration:none; color:inherit; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: fixed;
+    top:0; left:0; right:0;
+    z-index: 100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 20px 6%;
+    background: rgba(255,251,240,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid transparent;
+    transition: border-color .3s ease, box-shadow .3s ease;
+  }
+  nav.scrolled{
+    border-bottom-color: rgba(45,42,110,0.08);
+    box-shadow: 0 4px 24px rgba(45,42,110,0.06);
+  }
+  .logo{
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--ink);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo .dot{
+    color: var(--coral);
+  }
+  .nav-cta{
+    background: var(--ink);
+    color: var(--cream);
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 10px 22px;
+    border-radius: 999px;
+    transition: transform .2s ease, background .2s ease;
+  }
+  .nav-cta:hover{ background: var(--coral-deep); transform: translateY(-2px); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 140px 6% 80px;
+    overflow:hidden;
+  }
+
+  .hero-bg-blob{
+    position:absolute;
+    border-radius:50%;
+    filter: blur(0px);
+    opacity:0.5;
+    z-index:0;
+  }
+  .blob1{ width:520px; height:520px; background:var(--sun); top:-180px; left:-160px; opacity:0.35;}
+  .blob2{ width:420px; height:420px; background:var(--teal); bottom:-160px; right:-140px; opacity:0.3;}
+
+  .eyebrow{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--teal-deep);
+    background: rgba(78,205,196,0.14);
+    padding: 7px 18px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+    z-index:2;
+  }
+
+  .hero h1{
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height: 1.08;
+    color: var(--ink);
+    max-width: 880px;
+    z-index:2;
+    margin-bottom: 20px;
+  }
+  .hero h1 .hl{
+    color: var(--coral);
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .hero p.sub{
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin-bottom: 36px;
+    z-index:2;
+    line-height:1.55;
+  }
+
+  .hero-ctas{
+    display:flex;
+    gap: 16px;
+    flex-wrap:wrap;
+    justify-content:center;
+    z-index:2;
+    margin-bottom: 64px;
+  }
+
+  .btn-primary{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    background: var(--coral);
+    color: var(--white);
+    padding: 16px 32px;
+    border-radius: 999px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    box-shadow: 0 10px 24px rgba(255,107,74,0.35);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(255,107,74,0.45);
+    background: var(--coral-deep);
+  }
+  .btn-secondary{
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    background: var(--white);
+    color: var(--ink);
+    padding: 16px 28px;
+    border-radius: 999px;
+    border: 2px solid rgba(45,42,110,0.12);
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .btn-secondary:hover{
+    transform: translateY(-3px);
+    border-color: var(--ink);
+  }
+
+  /* ---------- FLASHCARD SIGNATURE ---------- */
+  .card-stage{
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    height: 220px;
+    z-index: 2;
+    perspective: 1200px;
+  }
+  .flashcard{
+    width:100%;
+    height:100%;
+    position:relative;
+    cursor:pointer;
+  }
+  .flashcard-inner{
+    width:100%; height:100%;
+    position:relative;
+    transition: transform 0.6s cubic-bezier(.4,.2,.2,1);
+    transform-style: preserve-3d;
+  }
+  .flashcard.flipped .flashcard-inner{ transform: rotateY(180deg); }
+  .face{
+    position:absolute; inset:0;
+    border-radius: 24px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    backface-visibility:hidden;
+    box-shadow: 0 20px 40px var(--shadow);
+  }
+  .face-front{
+    background: var(--white);
+    border: 3px solid var(--ink);
+  }
+  .face-back{
+    background: var(--ink);
+    color: var(--cream);
+    transform: rotateY(180deg);
+  }
+  .face .word{
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 2.4rem;
+  }
+  .face .pos{
+    font-family: var(--body);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity:0.55;
+    margin-top: 8px;
+  }
+  .face-hint{
+    position:absolute;
+    bottom: 14px;
+    font-size: 0.78rem;
+    opacity: 0.5;
+    font-weight:600;
+  }
+
+  /* floating word chips around hero */
+  .chip{
+    position:absolute;
+    font-family: var(--display);
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 18px var(--shadow);
+    z-index:1;
+    animation: float 6s ease-in-out infinite;
+  }
+  .chip1{ background: var(--sun); color: var(--ink); top: 18%; left: 8%; animation-delay: 0s;}
+  .chip2{ background: var(--teal); color: var(--white); top: 28%; right: 9%; animation-delay: 1.2s;}
+  .chip3{ background: var(--coral); color: var(--white); bottom: 22%; left: 12%; animation-delay: 2.4s;}
+  .chip4{ background: var(--white); color: var(--ink); border:2px solid var(--ink); bottom: 14%; right: 13%; animation-delay: 3.6s;}
+
+  @keyframes float{
+    0%, 100% { transform: translateY(0px) rotate(-2deg); }
+    50% { transform: translateY(-14px) rotate(2deg); }
+  }
+
+  @media (max-width: 760px){
+    .chip{ display:none; }
+  }
+
+  /* ---------- SOCIAL PROOF STRIP ---------- */
+  .proof-strip{
+    display:flex;
+    justify-content:center;
+    gap: 48px;
+    flex-wrap:wrap;
+    padding: 0 6% 80px;
+    text-align:center;
+  }
+  .proof-item .num{
+    font-family: var(--display);
+    font-weight:800;
+    font-size: 2rem;
+    color: var(--ink);
+  }
+  .proof-item .lbl{
+    font-size:0.9rem;
+    color: var(--ink-soft);
+    font-weight:600;
+  }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{
+    padding: 110px 6%;
+    position: relative;
+  }
+  .section-head{
+    text-align:center;
+    max-width: 640px;
+    margin: 0 auto 64px;
+  }
+  .section-head .tag{
+    font-family: var(--display);
+    font-weight:700;
+    color: var(--coral-deep);
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+    display:block;
+  }
+  .section-head h2{
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    color: var(--ink);
+    line-height:1.18;
+  }
+
+  /* ---------- FEATURES ---------- */
+  .features{
+    background: var(--white);
+    border-radius: 48px;
+    margin: 0 4%;
+  }
+  .feature-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px){
+    .feature-grid{ grid-template-columns: 1fr; }
+  }
+  .feature-card{
+    background: var(--cream);
+    border-radius: 28px;
+    padding: 36px 28px;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .feature-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 18px 34px var(--shadow);
+  }
+  .feature-icon{
+    width: 56px; height:56px;
+    border-radius: 16px;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  .fi-1{ background: rgba(255,107,74,0.16); }
+  .fi-2{ background: rgba(78,205,196,0.18); }
+  .fi-3{ background: rgba(255,210,63,0.3); }
+  .fi-4{ background: rgba(255,107,74,0.16); }
+  .fi-5{ background: rgba(78,205,196,0.18); }
+  .fi-6{ background: rgba(255,210,63,0.3); }
+
+  .feature-card h3{
+    font-family: var(--display);
+    font-weight:700;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .feature-card p{
+    font-size: 0.96rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{
+    max-width: 920px;
+    margin: 0 auto;
+    display:flex;
+    flex-direction:column;
+    gap: 0;
+  }
+  .step{
+    display:flex;
+    gap: 28px;
+    align-items:flex-start;
+    padding: 32px 0;
+    border-bottom: 2px dashed rgba(45,42,110,0.14);
+  }
+  .step:last-child{ border-bottom:none; }
+  .step-num{
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--white);
+    background: var(--ink);
+    width: 52px; height:52px;
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .step:nth-child(2) .step-num{ background: var(--coral); }
+  .step:nth-child(3) .step-num{ background: var(--teal-deep); }
+  .step-text h3{
+    font-family: var(--display);
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .step-text p{
+    color: var(--ink-soft);
+    line-height:1.6;
+  }
+
+  /* ---------- DOWNLOAD CTA ---------- */
+  .download{
+    background: var(--ink);
+    border-radius: 48px;
+    margin: 40px 4%;
+    color: var(--cream);
+    text-align:center;
+    padding: 90px 6%;
+    position: relative;
+    overflow:hidden;
+  }
+  .download .blob1{ background: var(--coral); opacity:0.5; }
+  .download .blob2{ background: var(--teal); opacity:0.4; }
+  .download h2{
+    font-family: var(--display);
+    font-weight:800;
+    font-size: clamp(1.9rem, 4.4vw, 3rem);
+    margin-bottom: 18px;
+    position:relative; z-index:2;
+  }
+  .download p{
+    color: rgba(255,251,240,0.78);
+    max-width: 480px;
+    margin: 0 auto 36px;
+    font-size: 1.05rem;
+    position:relative; z-index:2;
+  }
+  .download-btns{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    flex-wrap:wrap;
+    position:relative; z-index:2;
+    margin-bottom: 20px;
+  }
+  .btn-apk{
+    font-family: var(--display);
+    font-weight:700;
+    font-size: 1.1rem;
+    background: var(--coral);
+    color: var(--white);
+    padding: 18px 36px;
+    border-radius: 999px;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    box-shadow: 0 12px 28px rgba(255,107,74,0.4);
+    transition: transform .2s ease, background .2s ease;
+  }
+  .btn-apk:hover{ transform:translateY(-3px); background: var(--coral-deep); }
+  .download .note{
+    font-size: 0.85rem;
+    color: rgba(255,251,240,0.55);
+    position:relative; z-index:2;
+  }
+  .soon-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size: 0.85rem;
+    font-weight:600;
+    background: rgba(255,251,240,0.1);
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: rgba(255,251,240,0.7);
+    position:relative; z-index:2;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding: 50px 6% 40px;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  footer .logo{ justify-content:center; margin-bottom: 10px; }
+
+  /* fade-in on scroll */
+  .reveal{
+    opacity:0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo">Soz<span class="dot">Boy</span></div>
+  <a href="https://github.com/zokirov2oo6/sozboy-app/releases/download/v1.0.0/app-release.apk" class="nav-cta">APK yuklab olish</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-blob blob1"></div>
+  <div class="hero-bg-blob blob2"></div>
+
+  <div class="chip chip1">cat 🐱</div>
+  <div class="chip chip2">happy 😊</div>
+  <div class="chip chip3">run 🏃</div>
+  <div class="chip chip4">friend 🤝</div>
+
+  <span class="eyebrow">YANGI &middot; Android uchun</span>
+  <h1>Inglizcha so'zlarni <span class="hl">o'ynab</span> yodlang</h1>
+  <p class="sub">SozBoy — har kuni 5 daqiqa flashcard bilan mashq qiling, so'zlar yodingizda qoladi. Bosing-da, kartani aylantirib ko'ring 👇</p>
+
+  <div class="hero-ctas">
+    <a href="https://github.com/zokirov2oo6/sozboy-app/releases/download/v1.0.0/app-release.apk" class="btn-primary">📲 APK yuklab olish</a>
+    <a href="#features" class="btn-secondary">Qanday ishlaydi</a>
+  </div>
+
+  <div class="card-stage">
+    <div class="flashcard" id="demoCard">
+      <div class="flashcard-inner">
+        <div class="face face-front">
+          <div class="word">Wonder</div>
+          <div class="pos">fe'l / ot</div>
+          <div class="face-hint">Bosing 👆</div>
+        </div>
+        <div class="face face-back">
+          <div class="word">Hayratlanmoq</div>
+          <div class="pos">ajablanish, taajjub</div>
+          <div class="face-hint">Yana bosing 👆</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof-strip reveal">
+  <div class="proof-item">
+    <div class="num">1,000+</div>
+    <div class="lbl">tayyor so'zlar</div>
+  </div>
+  <div class="proof-item">
+    <div class="num">100%</div>
+    <div class="lbl">bepul</div>
+  </div>
+  <div class="proof-item">
+    <div class="num">5 daq</div>
+    <div class="lbl">kuniga yetarli</div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="section-head reveal">
+    <span class="tag">NEGA SOZBOY</span>
+    <h2>So'z yodlash endi zerikarli emas</h2>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-1">🔄</div>
+      <h3>Flashcard aylantirish</h3>
+      <p>Kartani bossangiz — old tomonda inglizcha so'z, orqasida o'zbekcha tarjimasi chiqadi. Oddiy, lekin samarali usul.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-2">📦</div>
+      <h3>Mavzular bo'yicha to'plamlar</h3>
+      <p>So'zlar mavzularga ajratilgan — hayvonlar, oziq-ovqat, ish, sayohat va boshqalar. Kerakli to'plamni tanlab boshlang.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-3">📈</div>
+      <h3>Progress kuzatuv</h3>
+      <p>Qaysi so'zlarni bilasiz, qaysilarini takrorlashingiz kerak — ilova buni o'zi eslab qoladi va sizga ko'rsatadi.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-4">⚡</div>
+      <h3>Tezkor takrorlash</h3>
+      <p>Qiyin so'zlar avtomatik ravishda ko'proq takrorlanadi, oson so'zlar kamroq — vaqtingiz behuda ketmaydi.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-5">📴</div>
+      <h3>Internetsiz ishlaydi</h3>
+      <p>So'zlar telefoningizda saqlanadi. Yo'lda, avtobusda, internet bo'lmasa ham mashq qilishda davom etasiz.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon fi-6">🇺🇿</div>
+      <h3>To'liq o'zbek tilida</h3>
+      <p>Interfeys ham, tarjimalar ham o'zbek tilida — hech qanday chalkashlik yo'q, tushunish oson.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="section-head reveal">
+    <span class="tag">QANDAY ISHLAYDI</span>
+    <h2>Uch qadamda boshlang</h2>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <h3>APK-ni yuklab oling</h3>
+        <p>Pastdagi tugma orqali ilovani telefoningizga o'rnating. Google Play'ga ham tez orada chiqadi.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <h3>Mavzuni tanlang</h3>
+        <p>O'zingizga qiziq yoki kerakli mavzudagi so'zlar to'plamini tanlab, mashqni boshlang.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <h3>Kartalarni varaqlang</h3>
+        <p>Har kuni bir necha daqiqa — so'zni ko'ring, taxmin qiling, kartani bosib tekshiring. Shu qadar oddiy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="download reveal">
+    <div class="hero-bg-blob blob1"></div>
+    <div class="hero-bg-blob blob2"></div>
+    <h2>Hoziroq boshlashga tayyormisiz?</h2>
+    <p>SozBoy-ni telefoningizga o'rnating va bugundan inglizcha so'zlarni yodlashni boshlang.</p>
+    <div class="download-btns">
+      <a href="https://github.com/zokirov2oo6/sozboy-app/releases/download/v1.0.0/app-release.apk" class="btn-apk">⬇️ APK yuklab olish (Android)</a>
+    </div>
+    <div class="soon-pill">🔜 Google Play'da tez orada</div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Soz<span class="dot">Boy</span></div>
+  <p>&copy; 2026 SozBoy. Inglizcha so'z boyligingizni oshirish uchun yaratilgan.</p>
+</footer>
+
+<script>
+  // flip demo card
+  document.getElementById('demoCard').addEventListener('click', function(){
+    this.classList.toggle('flipped');
+  });
+
+  // nav shadow on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
